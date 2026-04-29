@@ -120,9 +120,10 @@
     flex: 1;
     background: transparent;
     border: none;
-    padding: 12px 18px;
+    padding: 8px 16px;
+    min-height: 52px;
     font-family: 'Instrument Sans', sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--ink-soft);
     cursor: pointer;
@@ -131,8 +132,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 2px;
     position: relative;
+    line-height: 1.2;
   }
 
   .day-nav button:hover {
@@ -154,18 +157,13 @@
     font-weight: 600;
     letter-spacing: 0.01em;
     text-align: center;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .day-nav button .day-time {
-    font-size: 13px;
+    font-size: 11px;
     letter-spacing: 0.06em;
     color: var(--ink-faint);
     font-family: 'Instrument Sans', sans-serif;
-    margin-top: auto;
   }
 
   .day-nav button.complete {
@@ -3626,282 +3624,15 @@
       <!-- EDIT-DESIGN-TITLE -->
       <h2 class="section-title">What could be <em>next</em>?</h2>
       <!-- EDIT-DESIGN-SUB -->
-      <p class="section-description">Sixty minutes, five phases. AI helps synthesize and pushback. Humans decide what matters.</p>
+      <p class="section-description">[placeholder — fill in description]</p>
     </div>
 
-    <!-- Phase progress bar -->
-    <div class="phase-progress">
-      <div class="phase-progress-seg current" data-seg="1"></div>
-      <div class="phase-progress-seg" data-seg="2"></div>
-      <div class="phase-progress-seg" data-seg="3"></div>
-      <div class="phase-progress-seg" data-seg="4"></div>
-      <div class="phase-progress-seg" data-seg="5"></div>
-    </div>
+    <!-- Content for this section is intentionally blank for now. -->
+    <!-- Backup of the original phased workshop is in big-picture-original-BACKUP.html -->
 
-    <!-- Phase nav (scoped inside Design only) -->
-    <nav class="phase-nav">
-      <button class="active" data-phase="1" onclick="showPhase(1)">
-        <span class="phase-num">01</span>
-        <span class="phase-name">Celebrate</span>
-        <span class="phase-time">5 min</span>
-      </button>
-      <button data-phase="2" onclick="showPhase(2)">
-        <span class="phase-num">02</span>
-        <span class="phase-name">Notice</span>
-        <span class="phase-time">15 min</span>
-      </button>
-      <button data-phase="3" onclick="showPhase(3)">
-        <span class="phase-num">03</span>
-        <span class="phase-name">Synthesize</span>
-        <span class="phase-time">15 min</span>
-      </button>
-      <button data-phase="4" onclick="showPhase(4)">
-        <span class="phase-num">04</span>
-        <span class="phase-name">Provoke</span>
-        <span class="phase-time">15 min</span>
-      </button>
-      <button data-phase="5" onclick="showPhase(5)">
-        <span class="phase-num">05</span>
-        <span class="phase-name">Commit</span>
-        <span class="phase-time">10 min</span>
-      </button>
-    </nav>
-
-    <!-- ======= PHASE 1: CELEBRATE ======= -->
-    <div class="phase-panel active" id="phase-1">
-      <div class="phase-header">
-        <div class="phase-kicker">setup · 5 min</div>
-        <h3 class="phase-title">Zoom <em>out</em>.</h3>
-        <p class="phase-description">Past delivery, past this quarter. What could we be pointing at 18 months from now?</p>
-      </div>
-
-      <div class="facilitator-panel">
-        <div class="facilitator-label">opening</div>
-        <!-- EDIT-DESIGN-P1-SCRIPT -->
-        <div class="facilitator-script">"Last hour was May through December. This hour is 18 months out. Different muscle. Three lenses: the customer, the people serving them, the VMO itself. Not solving. Noticing."</div>
-      </div>
-
-      <div class="three-col">
-        <div class="lens lens-customer">
-          <div class="lens-header">
-            <span class="lens-name">Customer-facing</span>
-          </div>
-          <p class="lens-intro">Where the customer directly experiences value — or friction.</p>
-        </div>
-        <div class="lens lens-internal">
-          <div class="lens-header">
-            <span class="lens-name">Internal enablers</span>
-          </div>
-          <p class="lens-intro">The processes and systems behind great CX.</p>
-        </div>
-        <div class="lens lens-vmo">
-          <div class="lens-header">
-            <span class="lens-name">VMO as engine</span>
-          </div>
-          <p class="lens-intro">How the VMO operates — roadshows, hackathons, field model, Alberta.</p>
-        </div>
-      </div>
-
-      <div class="action-bar">
-        <button class="btn btn-primary" onclick="showPhase(2)">Start friction mapping <span class="arrow">→</span></button>
-      </div>
-    </div>
-
-    <!-- ======= PHASE 2: NOTICE / FRICTION ======= -->
-    <div class="phase-panel" id="phase-2">
-      <div class="phase-header">
-        <div class="phase-kicker">diverge · 15 min</div>
-        <h3 class="phase-title">Where's the <em>friction</em>?</h3>
-        <p class="phase-description">Three lenses. Anyone adds to any lens. Don't solve — name.</p>
-      </div>
-
-      <div class="facilitator-panel">
-        <div class="facilitator-label">prompts</div>
-        <!-- EDIT-DESIGN-P2-SCRIPT -->
-        <div class="facilitator-script">"Where does the customer still hit friction, even after what we've shipped?" — pivot — "What slows down the people serving them?" — pivot — "What stops the VMO from being 10x?"</div>
-      </div>
-
-      <div class="three-col">
-        <div class="lens lens-customer">
-          <div class="lens-header">
-            <span class="lens-name">Customer</span>
-            <span class="lens-count" id="count-customer">0</span>
-          </div>
-          <div class="friction-list" id="list-customer"></div>
-          <div class="friction-input">
-            <input type="text" id="input-customer" placeholder="add a friction point…" onkeydown="if(event.key==='Enter') addFriction('customer')" />
-            <button onclick="addFriction('customer')">Add</button>
-          </div>
-        </div>
-        <div class="lens lens-internal">
-          <div class="lens-header">
-            <span class="lens-name">Internal</span>
-            <span class="lens-count" id="count-internal">0</span>
-          </div>
-          <div class="friction-list" id="list-internal"></div>
-          <div class="friction-input">
-            <input type="text" id="input-internal" placeholder="add a friction point…" onkeydown="if(event.key==='Enter') addFriction('internal')" />
-            <button onclick="addFriction('internal')">Add</button>
-          </div>
-        </div>
-        <div class="lens lens-vmo">
-          <div class="lens-header">
-            <span class="lens-name">VMO</span>
-            <span class="lens-count" id="count-vmo">0</span>
-          </div>
-          <div class="friction-list" id="list-vmo"></div>
-          <div class="friction-input">
-            <input type="text" id="input-vmo" placeholder="add a friction point…" onkeydown="if(event.key==='Enter') addFriction('vmo')" />
-            <button onclick="addFriction('vmo')">Add</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="action-bar">
-        <button class="btn" onclick="showPhase(1)">← Back</button>
-        <button class="btn btn-primary" onclick="showPhase(3)">Synthesize <span class="arrow">→</span></button>
-      </div>
-    </div>
-
-    <!-- ======= PHASE 3: SYNTHESIZE ======= -->
-    <div class="phase-panel" id="phase-3">
-      <div class="phase-header">
-        <div class="phase-kicker">converge · 15 min</div>
-        <h3 class="phase-title">What <em>patterns</em> emerge?</h3>
-        <p class="phase-description">AI clusters the friction into themes with How Might We questions. Read, react, sharpen. You decide what matters.</p>
-      </div>
-
-      <div class="facilitator-panel">
-        <div class="facilitator-label">aside</div>
-        <!-- EDIT-DESIGN-P3-SCRIPT -->
-        <div class="facilitator-script">"I'll ask AI to take a pass at clustering. We react — sharpen, dismiss, reframe. Starting point, not verdict."</div>
-      </div>
-
-      <div class="action-bar">
-        <span class="label" id="clusterStatus">ready when you are →</span>
-        <button class="btn" onclick="showPhase(2)">← Back</button>
-        <button class="btn btn-primary" id="runClusterBtn" onclick="runClustering()">Run synthesis <span class="arrow">✨</span></button>
-      </div>
-
-      <div class="clusters-grid" id="clustersGrid">
-        <div class="empty">patterns appear here after synthesis</div>
-      </div>
-
-      <div class="action-bar" id="moveToProvokeBar" style="display: none;">
-        <button class="btn btn-primary" onclick="showPhase(4)">On to provocations <span class="arrow">→</span></button>
-      </div>
-    </div>
-
-    <!-- ======= PHASE 4: PROVOKE ======= -->
-    <div class="phase-panel" id="phase-4">
-      <div class="phase-header">
-        <div class="phase-kicker">stretch · 15 min</div>
-        <h3 class="phase-title">What <em>breaks</em>?<br/>What gets <span class="highlight">better</span>?</h3>
-        <p class="phase-description">Three concepts, deliberately half-formed. Click steelman to have AI argue against each one. Let it push back.</p>
-      </div>
-
-      <div class="facilitator-panel">
-        <div class="facilitator-label">framing</div>
-        <!-- EDIT-DESIGN-P4-SCRIPT -->
-        <div class="facilitator-script">"Three concepts on the table. Not recommendations — provocations. For each: what would make it amazing? What would make it terrible?"</div>
-      </div>
-
-      <div class="provocation-grid">
-        <!-- EDIT-DESIGN-PROV-1 -->
-        <div class="provocation">
-          <div class="provocation-tag">concept one</div>
-          <h3 class="provocation-name"><em>FieldOS</em></h3>
-          <p class="provocation-pitch">An AI layer watching every customer signal across every system, telling each rep the next best conversation to have — before the customer asks.</p>
-          <div class="steelman-buttons">
-            <button class="steelman-btn" onclick="runSteelman('FieldOS', 'An AI layer that watches every customer signal across every system and tells each rep the next best conversation to have before the customer has to ask', 'a skeptical field rep with 12 years of experience')">
-              <span>From a field rep</span><span class="arrow">→</span>
-            </button>
-            <button class="steelman-btn" onclick="runSteelman('FieldOS', 'An AI layer that watches every customer signal across every system and tells each rep the next best conversation to have before the customer has to ask', 'a customer who values authentic human relationships')">
-              <span>From a customer</span><span class="arrow">→</span>
-            </button>
-            <button class="steelman-btn" onclick="runSteelman('FieldOS', 'An AI layer that watches every customer signal across every system and tells each rep the next best conversation to have before the customer has to ask', 'a CFO looking at cost, ROI, and risk')">
-              <span>From the CFO</span><span class="arrow">→</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- EDIT-DESIGN-PROV-2 -->
-        <div class="provocation">
-          <div class="provocation-tag">concept two</div>
-          <h3 class="provocation-name"><em>RepOne</em></h3>
-          <p class="provocation-pitch">AI-maintained memory of every customer, so whoever picks up the call is "the one rep." The customer can't tell the difference.</p>
-          <div class="steelman-buttons">
-            <button class="steelman-btn" onclick="runSteelman('RepOne', 'An AI-maintained continuous memory of every customer, so any rep who picks up is the one rep and the customer cannot tell the difference', 'a skeptical field rep with 12 years of experience')">
-              <span>From a field rep</span><span class="arrow">→</span>
-            </button>
-            <button class="steelman-btn" onclick="runSteelman('RepOne', 'An AI-maintained continuous memory of every customer, so any rep who picks up is the one rep and the customer cannot tell the difference', 'a customer who values authentic human relationships')">
-              <span>From a customer</span><span class="arrow">→</span>
-            </button>
-            <button class="steelman-btn" onclick="runSteelman('RepOne', 'An AI-maintained continuous memory of every customer, so any rep who picks up is the one rep and the customer cannot tell the difference', 'a CFO looking at cost, ROI, and risk')">
-              <span>From the CFO</span><span class="arrow">→</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- EDIT-DESIGN-PROV-3 -->
-        <div class="provocation">
-          <div class="provocation-tag">concept three</div>
-          <h3 class="provocation-name"><em>Self-Serve</em><br/><em>Value</em></h3>
-          <p class="provocation-pitch">Customers see their own ROI in real time via an AI dashboard. No QBR needed. What does that do to the VMO?</p>
-          <div class="steelman-buttons">
-            <button class="steelman-btn" onclick="runSteelman('Self-Serve Value', 'The customer sees their own ROI in real time via an AI-generated dashboard. No QBR needed', 'a VMO leader whose current role is partly replaced')">
-              <span>From a VMO lead</span><span class="arrow">→</span>
-            </button>
-            <button class="steelman-btn" onclick="runSteelman('Self-Serve Value', 'The customer sees their own ROI in real time via an AI-generated dashboard. No QBR needed', 'a customer who is too busy to interpret dashboards')">
-              <span>From a customer</span><span class="arrow">→</span>
-            </button>
-            <button class="steelman-btn" onclick="runSteelman('Self-Serve Value', 'The customer sees their own ROI in real time via an AI-generated dashboard. No QBR needed', 'a CFO looking at cost, ROI, and risk')">
-              <span>From the CFO</span><span class="arrow">→</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div id="steelmanContainer"></div>
-
-      <div class="action-bar">
-        <button class="btn" onclick="showPhase(3)">← Back</button>
-        <button class="btn btn-primary" onclick="showPhase(5)">Shortlist <span class="arrow">→</span></button>
-      </div>
-    </div>
-
-    <!-- ======= PHASE 5: COMMIT ======= -->
-    <div class="phase-panel" id="phase-5">
-      <div class="phase-header">
-        <div class="phase-kicker">close · 10 min</div>
-        <h3 class="phase-title">The one to <em>pursue</em>.</h3>
-        <p class="phase-description">One sentence each. Becomes the shortlist for SOW 2. No debate.</p>
-      </div>
-
-      <div class="facilitator-panel">
-        <div class="facilitator-label">closing round</div>
-        <!-- EDIT-DESIGN-P5-SCRIPT -->
-        <div class="facilitator-script">"One sentence each: 'The one I'd most want us to pursue is ___ because ___.' No debate, no defense."</div>
-      </div>
-
-      <div class="shortlist-area">
-        <div class="shortlist-header">
-          <h3 class="shortlist-title">Our shortlist</h3>
-          <span class="lens-count" id="commitmentCount">0</span>
-        </div>
-        <div class="shortlist-items" id="shortlistItems">
-          <div class="empty">commitments appear here</div>
-        </div>
-        <div class="shortlist-input">
-          <input type="text" id="shortlistInput" placeholder="the one I'd pursue is…" onkeydown="if(event.key==='Enter') addCommitment()" />
-          <button class="btn btn-primary" onclick="addCommitment()">Commit <span class="arrow">★</span></button>
-        </div>
-      </div>
-
-      <div class="action-bar" style="margin-top: 40px;">
-        <button class="btn" onclick="exportSession()">Export</button>
-        <button class="btn btn-primary" onclick="showDay('lunch')">To lunch <span class="arrow">→</span></button>
-      </div>
+    <div class="action-bar" style="margin-top: 40px;">
+      <button class="btn" onclick="exportSession()">Export</button>
+      <button class="btn btn-primary" onclick="showDay('lunch')">To lunch <span class="arrow">→</span></button>
     </div>
 
   </section>
@@ -4034,6 +3765,45 @@
 </div>
 
 <script>
+  // ====== STORAGE SHIM ======
+  // Routes window.storage.* calls to /api/state so all browsers share state.
+  // The "shared" boolean argument from the original API is ignored (everything
+  // is shared by virtue of going to the same backend).
+  if (typeof window.storage === 'undefined') {
+    window.storage = {
+      async get(key) {
+        const res = await fetch(`/api/state?op=get&key=${encodeURIComponent(key)}`);
+        if (res.status === 404) return null;
+        if (!res.ok) throw new Error(`storage.get failed: ${res.status}`);
+        return res.json();
+      },
+      async set(key, value) {
+        const res = await fetch('/api/state', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key, value: String(value) }),
+        });
+        if (!res.ok) throw new Error(`storage.set failed: ${res.status}`);
+        return res.json();
+      },
+      async delete(key) {
+        const res = await fetch(`/api/state?key=${encodeURIComponent(key)}`, {
+          method: 'DELETE',
+        });
+        if (!res.ok) throw new Error(`storage.delete failed: ${res.status}`);
+        return res.json();
+      },
+      async list(prefix) {
+        const url = prefix
+          ? `/api/state?op=list&prefix=${encodeURIComponent(prefix)}`
+          : '/api/state?op=list';
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`storage.list failed: ${res.status}`);
+        return res.json();
+      },
+    };
+  }
+
   let state = {
     arrivals: [],
     pride: [],
@@ -4046,17 +3816,6 @@
     commitments: [],
     favorites: []
   };
-
-  // Shim for window.storage — falls back to localStorage when not running inside Anthropic's Artifacts sandbox.
-  // Single-user mode: each visitor sees only their own data.
-  if (typeof window.storage === 'undefined') {
-    window.storage = {
-      get:    async (k)        => { const v = localStorage.getItem(k); return v !== null ? { value: v } : null; },
-      set:    async (k, v)     => { localStorage.setItem(k, v); return { value: v }; },
-      delete: async (k)        => { localStorage.removeItem(k); return { deleted: true }; },
-      list:   async (p = '')   => ({ keys: Object.keys(localStorage).filter(x => x.startsWith(p)) }),
-    };
-  }
 
   let userName = localStorage.getItem('workshop-user-name') || '';
 
@@ -4714,7 +4473,7 @@ Respond ONLY with valid JSON in this exact format, no markdown, no preamble:
 }`;
 
     try {
-      const response = await fetch("/api/claude", {
+      const response = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -4799,7 +4558,7 @@ Respond ONLY with valid JSON in this exact format, no markdown, no preamble:
 Give the single strongest, most honest objection to this concept from your perspective. Not a list — one cohesive argument. Be specific. Speak in the first person, in-character. 80-120 words. No hedging, no "on the other hand" — just the sharpest version of why this might be a bad idea from where you sit.`;
 
     try {
-      const response = await fetch("/api/claude", {
+      const response = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
