@@ -107,10 +107,6 @@
     border: 2px solid var(--border-soft);
     border-radius: 999px;
     padding: 6px;
-    position: sticky;
-    top: 16px;
-    z-index: 50;
-    backdrop-filter: blur(12px);
     background: rgba(255, 253, 249, 0.9);
     box-shadow: 0 4px 24px rgba(45, 24, 16, 0.08);
     align-items: stretch;
@@ -401,7 +397,7 @@
     font-size: 18px;
     font-style: italic;
     color: var(--ink);
-    animation: arrivalPop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: arrivalPop 0.4s ease-out;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -415,9 +411,8 @@
   }
 
   @keyframes arrivalPop {
-    0% { opacity: 0; transform: scale(0.5) translateY(20px); }
-    70% { transform: scale(1.1) translateY(-4px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .arrivals-empty {
@@ -717,12 +712,12 @@
   }
 
   .reaction-count.pop {
-    animation: reactionPop 0.4s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: reactionPop 0.3s ease-out;
   }
 
   @keyframes reactionPop {
     0% { transform: scale(1); }
-    50% { transform: scale(1.5); }
+    50% { transform: scale(1.15); }
     100% { transform: scale(1); }
   }
 
@@ -861,7 +856,7 @@
     display: flex;
     justify-content: space-between;
     gap: 16px;
-    animation: favoriteAppear 0.7s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: favoriteAppear 0.4s ease-out;
     transition: all 0.25s;
     position: relative;
   }
@@ -891,8 +886,8 @@
   }
 
   @keyframes favoriteAppear {
-    0% { opacity: 0; transform: translateX(-20px) scale(0.95); }
-    100% { opacity: 1; transform: translateX(0) scale(1); }
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
   }
 
   .favorite-item .item-content {
@@ -1323,12 +1318,12 @@
   }
 
   .lens-count.bump {
-    animation: countBump 0.5s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: countBump 0.3s ease-out;
   }
 
   @keyframes countBump {
     0% { transform: scale(1); }
-    50% { transform: scale(1.4) rotate(-5deg); color: var(--sand); }
+    50% { transform: scale(1.15); }
     100% { transform: scale(1); }
   }
 
@@ -1363,7 +1358,7 @@
     line-height: 1.45;
     color: var(--ink);
     position: relative;
-    animation: itemPop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: itemPop 0.4s ease-out;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -1765,7 +1760,7 @@
     display: flex;
     justify-content: space-between;
     gap: 16px;
-    animation: itemPop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: itemPop 0.4s ease-out;
     position: relative;
     border: 1px solid transparent;
     transition: all 0.2s;
@@ -2085,7 +2080,7 @@
     font-style: italic;
     color: var(--navy);
     line-height: 1.2;
-    animation: wordAppear 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: wordAppear 0.4s ease-out;
     transition: all 0.25s;
     cursor: default;
     letter-spacing: -0.01em;
@@ -2106,9 +2101,8 @@
   .word-item:nth-child(7n+7) { font-size: 20px; color: var(--red-deep); }
 
   @keyframes wordAppear {
-    0% { opacity: 0; transform: scale(0.5); }
-    70% { transform: scale(1.1); }
-    100% { opacity: 1; transform: scale(1); }
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .checkin-empty {
@@ -2191,7 +2185,7 @@
     font-size: 14px;
     line-height: 1.45;
     color: var(--ink);
-    animation: itemPop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: itemPop 0.4s ease-out;
     display: flex;
     justify-content: space-between;
     gap: 12px;
@@ -2199,9 +2193,8 @@
   }
 
   @keyframes itemPop {
-    0% { opacity: 0; transform: scale(0.85) translateY(8px); }
-    70% { transform: scale(1.02) translateY(-2px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   .missing-item .missing-text { flex: 1; }
@@ -2617,7 +2610,7 @@
     border-radius: 16px;
     padding: 18px 22px;
     max-width: 320px;
-    animation: prideAppear 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.4);
+    animation: prideAppear 0.4s ease-out;
     transition: all 0.2s;
     position: relative;
   }
@@ -2648,9 +2641,8 @@
   }
 
   @keyframes prideAppear {
-    0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
-    60% { transform: scale(1.08) rotate(var(--final-rotate, -1deg)); }
-    100% { opacity: 1; transform: scale(1) rotate(var(--final-rotate, -1deg)); }
+    from { opacity: 0; transform: translateY(10px) rotate(var(--final-rotate, -1deg)); }
+    to { opacity: 1; transform: translateY(0) rotate(var(--final-rotate, -1deg)); }
   }
 
   .pride-card-text {
@@ -3088,6 +3080,101 @@
     .sendoff-title { font-size: 44px; }
     .sendoff-body { font-size: 18px; }
   }
+
+  /* ============================================================ */
+  /* ============ COMPACT MODE ================================== */
+  /* Tighten the design ~20% so more fits on screen without zoom. */
+  /* These rules override the originals above.                    */
+  /* ============================================================ */
+
+  /* Container: less side padding, less bottom whitespace */
+  .container {
+    padding: 20px 36px 80px;
+  }
+
+  /* Header */
+  .brand-title { font-size: 48px; }
+  .session-meta .time { font-size: 22px; }
+  header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+  }
+
+  /* Section headers across all panels */
+  .section-header { margin-bottom: 28px; }
+  .section-title { font-size: 56px; margin-bottom: 18px; }
+  .section-kicker { font-size: 22px; margin-bottom: 8px; }
+  .section-description { font-size: 19px; }
+
+  /* Welcome panel */
+  .welcome-hero { padding: 36px; margin-bottom: 28px; }
+  .welcome-text h2 { font-size: 56px; margin-bottom: 16px; }
+  .welcome-text p { font-size: 18px; }
+  .arrivals-board { padding: 22px; min-height: 220px; }
+  .agenda-list { gap: 12px; margin-bottom: 32px; }
+  .agenda-card { padding: 18px; }
+  .agenda-name { font-size: 21px; }
+  .agenda-title { font-size: 26px; margin-bottom: 12px; }
+
+  /* Recap panel */
+  .deliverables-grid { gap: 14px; margin-bottom: 28px; }
+  .deliverable-card { padding: 24px; }
+  .deliverable-hero { font-size: 26px; }
+  .pride-section { padding: 32px 28px; margin-bottom: 28px; }
+  .pride-title { font-size: 32px; }
+  .team-section { padding: 32px 28px; margin-bottom: 28px; }
+  .team-title { font-size: 32px; }
+  .thankyou-section { padding: 36px 28px; margin-bottom: 28px; }
+  .thankyou-title { font-size: 36px; }
+  .thankyou-body { font-size: 18px; }
+
+  /* What's Next / SOW 2 */
+  .scope-grid { gap: 14px; margin-bottom: 32px; }
+  .scope-card { padding: 22px; }
+  .scope-owner { font-size: 20px; }
+  .scope-title { font-size: 22px; }
+  .scope-body { font-size: 14px; }
+
+  /* Break panel */
+  .timer-display { font-size: 132px; }
+  .timer-panel { padding: 36px 28px; margin-bottom: 28px; }
+  .checkin-panel { padding: 32px 28px; }
+  .checkin-title { font-size: 28px; }
+
+  /* Design workshop */
+  #day-design .phase-nav { gap: 8px; margin-bottom: 32px; }
+  #day-design .phase-nav button { padding: 12px 14px; }
+  #day-design .phase-nav button .phase-name { font-size: 18px; }
+  .phase-header { margin-bottom: 24px; }
+  .phase-title { font-size: 40px; margin-bottom: 14px; }
+  .phase-description { font-size: 17px; }
+  .three-col { gap: 14px; margin-bottom: 28px; }
+  .lens { padding: 22px; min-height: 260px; }
+  .clusters-grid { gap: 14px; }
+  .cluster { padding: 24px; }
+  .provocation-grid { gap: 14px; margin-bottom: 28px; }
+  .provocation { padding: 24px; }
+  .provocation-name { font-size: 32px; }
+  .shortlist-area { padding: 28px; }
+  .shortlist-title { font-size: 28px; }
+
+  /* Lunch / closing */
+  .day-stats { padding: 28px 24px; margin-bottom: 36px; gap: 14px; }
+  .day-stat-num { font-size: 52px; margin-bottom: 8px; }
+  .favorite-section { padding: 32px 28px; margin-bottom: 28px; }
+  .favorite-title { font-size: 32px; }
+  .lunch-grid { gap: 16px; margin-bottom: 28px; }
+  .lunch-card { padding: 26px 24px; }
+  .lunch-card-title { font-size: 24px; }
+  .sendoff-section { padding: 48px 36px; }
+  .sendoff-title { font-size: 44px; margin-bottom: 18px; }
+  .sendoff-body { font-size: 18px; }
+
+  /* Generic action bar tightening */
+  .action-bar { margin-top: 28px; }
+
+  /* Facilitator panel a touch tighter */
+  .facilitator-panel { padding: 18px 22px; }
 </style>
 </head>
 <body>
