@@ -3887,6 +3887,26 @@
 
   // ======== STORAGE ========
   async function loadState() {
+    // Check the reset signal first. If it's newer than what this browser has
+    // seen, the session was reset by someone — clear local name and reload to
+    // show the login overlay.
+    try {
+      const res = await window.storage.get('reset-signal-v1', true);
+      if (res && res.value) {
+        const lastSeen = localStorage.getItem('workshop-last-reset-seen') || '';
+        if (res.value !== lastSeen) {
+          localStorage.setItem('workshop-last-reset-seen', res.value);
+          // Only bounce if this user is currently "logged in" — otherwise
+          // they're already on the login screen and reloading is pointless.
+          if (localStorage.getItem('workshop-user-name')) {
+            localStorage.removeItem('workshop-user-name');
+            location.reload();
+            return;
+          }
+        }
+      }
+    } catch (e) { /* empty */ }
+
     try {
       const res = await window.storage.get('arrivals-list-v1', true);
       if (res && res.value) state.arrivals = JSON.parse(res.value);
@@ -3969,7 +3989,7 @@
   setInterval(syncState, 5000);
 
   async function resetSession() {
-    if (!confirm('Reset all shared session data for everyone?')) return;
+    if (!confirm('Reset all shared session data for everyone? This will send everyone back to the login screen.')) return;
     state.arrivals = [];
     state.pride = [];
     state.photos = {};
@@ -3993,18 +4013,16 @@
       for (let i = 1; i <= 6; i++) {
         await window.storage.delete('team-photo-' + i, true);
       }
+      // Write a reset signal so every other browser kicks back to the login screen
+      // on their next syncState() call.
+      const signal = String(Date.now());
+      await window.storage.set('reset-signal-v1', signal, true);
+      localStorage.setItem('workshop-last-reset-seen', signal);
     } catch (e) { /* empty */ }
-    renderArrivals();
-    renderPride();
-    renderPhotos();
-    renderReactions();
-    renderMissing();
-    renderCheckin();
-    renderFriction();
-    renderClusters();
-    renderCommitments();
-    renderFavorites();
-    renderDayStats();
+
+    // Boot the local user back to the login overlay too.
+    localStorage.removeItem('workshop-user-name');
+    location.reload();
   }
 
   async function saveReactions() {
