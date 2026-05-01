@@ -3154,6 +3154,42 @@
 
   .photo-frame.has-photo .photo-placeholder { display: none; }
 
+  .photo-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    background: rgba(45, 24, 16, 0.7);
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 400;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+    padding: 0;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .photo-frame.has-photo .photo-remove {
+    display: flex;
+  }
+  .photo-remove:hover {
+    background: var(--red-deep, #b94a3d);
+    transform: scale(1.1);
+  }
+  .photo-remove:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 2px;
+  }
+
   /* ======== THANK YOU ======== */
   .thankyou-section {
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
@@ -4547,6 +4583,7 @@
               <div class="photo-caption">add a photo</div>
             </div>
           </label>
+          <button type="button" class="photo-remove" aria-label="Remove photo" onclick="removePhoto(1)">×</button>
         </div>
         <div class="photo-frame" data-slot="2">
           <input type="file" accept="image/*" onchange="uploadPhoto(event, 2)" id="file-2" hidden />
@@ -4556,6 +4593,7 @@
               <div class="photo-caption">add a photo</div>
             </div>
           </label>
+          <button type="button" class="photo-remove" aria-label="Remove photo" onclick="removePhoto(2)">×</button>
         </div>
         <div class="photo-frame" data-slot="3">
           <input type="file" accept="image/*" onchange="uploadPhoto(event, 3)" id="file-3" hidden />
@@ -4565,6 +4603,7 @@
               <div class="photo-caption">add a photo</div>
             </div>
           </label>
+          <button type="button" class="photo-remove" aria-label="Remove photo" onclick="removePhoto(3)">×</button>
         </div>
         <div class="photo-frame" data-slot="4">
           <input type="file" accept="image/*" onchange="uploadPhoto(event, 4)" id="file-4" hidden />
@@ -4574,6 +4613,7 @@
               <div class="photo-caption">add a photo</div>
             </div>
           </label>
+          <button type="button" class="photo-remove" aria-label="Remove photo" onclick="removePhoto(4)">×</button>
         </div>
         <div class="photo-frame" data-slot="5">
           <input type="file" accept="image/*" onchange="uploadPhoto(event, 5)" id="file-5" hidden />
@@ -4583,6 +4623,7 @@
               <div class="photo-caption">add a photo</div>
             </div>
           </label>
+          <button type="button" class="photo-remove" aria-label="Remove photo" onclick="removePhoto(5)">×</button>
         </div>
         <div class="photo-frame" data-slot="6">
           <input type="file" accept="image/*" onchange="uploadPhoto(event, 6)" id="file-6" hidden />
@@ -4592,6 +4633,7 @@
               <div class="photo-caption">add a photo</div>
             </div>
           </label>
+          <button type="button" class="photo-remove" aria-label="Remove photo" onclick="removePhoto(6)">×</button>
         </div>
       </div>
     </div>
@@ -6075,6 +6117,27 @@
     fireConfetti(20, 0.5);
     // Reset so re-uploading the exact same file still triggers a change.
     event.target.value = '';
+  }
+
+  async function removePhoto(slot) {
+    if (!state.photos[slot]) return;
+    if (!confirm('Remove this photo?')) return;
+
+    delete state.photos[slot];
+    renderPhotos();
+
+    // Also clear the file input so re-picking the same file later works.
+    const input = document.getElementById('file-' + slot);
+    if (input) input.value = '';
+
+    try {
+      await window.storage.delete('team-photo-' + slot, true);
+    } catch (e) {
+      console.error('Photo delete failed:', e);
+      // Photo's already gone from this device's view; surface the issue
+      // gently rather than blocking.
+      alert("Removed locally, but couldn't sync removal to other devices.");
+    }
   }
 
   function resizeImage(file, maxWidth, quality) {
