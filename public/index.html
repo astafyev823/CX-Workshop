@@ -3147,6 +3147,9 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
   }
 
   .photo-frame.has-photo .photo-placeholder { display: none; }
@@ -6016,20 +6019,62 @@
     const file = event.target.files[0];
     if (!file) return;
 
-    // Resize to max 600px width to keep storage size manageable
-    const resized = await resizeImage(file, 600, 0.8);
-    state.photos[slot] = resized;
-
+    let resized;
     try {
-      await window.storage.set('team-photo-' + slot, resized, true);
-    } catch (e) {
-      console.error(e);
-      alert('Photo too large — try a smaller image.');
+      // Resize to max 600px width to keep storage size manageable.
+      resized = await resizeImage(file, 600, 0.8);
+    } catch (err) {
+      console.error('Image resize failed:', err);
+      alert("Couldn't read that image — try a different file.");
+      // Reset input so picking the same file again still triggers onchange.
+      event.target.value = '';
       return;
     }
 
+    state.photos[slot] = resized;
+    // Render immediately so the user sees feedback even if save is slow.
     renderPhotos();
+
+    // Try saving; if it fails (often because of storage size), retry with
+    // progressively smaller versions before giving up.
+    const fallbacks = [
+      { w: 600, q: 0.8 },
+      { w: 480, q: 0.7 },
+      { w: 360, q: 0.6 }
+    ];
+    let saved = false;
+    for (let i = 0; i < fallbacks.length; i++) {
+      try {
+        await window.storage.set('team-photo-' + slot, resized, true);
+        saved = true;
+        break;
+      } catch (e) {
+        console.warn(`Photo save attempt ${i + 1} failed:`, e);
+        // Don't bother retrying with a smaller version on the first attempt
+        // because we already used the largest size we wanted.
+        if (i + 1 < fallbacks.length) {
+          try {
+            const next = fallbacks[i + 1];
+            resized = await resizeImage(file, next.w, next.q);
+            state.photos[slot] = resized;
+            renderPhotos();
+          } catch (err) {
+            console.error('Fallback resize failed:', err);
+            break;
+          }
+        }
+      }
+    }
+
+    if (!saved) {
+      alert("Couldn't save the photo (it might be too large). It'll show on this device but won't sync to others.");
+      event.target.value = '';
+      return;
+    }
+
     fireConfetti(20, 0.5);
+    // Reset so re-uploading the exact same file still triggers a change.
+    event.target.value = '';
   }
 
   function resizeImage(file, maxWidth, quality) {
@@ -6044,7 +6089,11 @@
           canvas.height = img.height * scale;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL('image/jpeg', quality));
+          try {
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          } catch (err) {
+            reject(err);
+          }
         };
         img.onerror = reject;
         img.src = e.target.result;
@@ -6058,16 +6107,21 @@
     for (let i = 1; i <= 6; i++) {
       const frame = document.querySelector(`.photo-frame[data-slot="${i}"]`);
       if (!frame) continue;
-
+      const label = frame.querySelector('.photo-label');
       const existing = frame.querySelector('img');
+
       if (state.photos[i]) {
         frame.classList.add('has-photo');
         if (!existing) {
           const img = document.createElement('img');
           img.src = state.photos[i];
-          frame.appendChild(img);
+          img.alt = 'team photo';
+          // Place inside the label so the click target is consistent.
+          (label || frame).appendChild(img);
         } else {
           existing.src = state.photos[i];
+          // Migrate older instances that lived directly under the frame.
+          if (label && existing.parentElement !== label) label.appendChild(existing);
         }
       } else {
         frame.classList.remove('has-photo');
