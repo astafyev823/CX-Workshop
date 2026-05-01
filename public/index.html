@@ -2145,9 +2145,9 @@
   .roadtrip-panel {
     background: var(--paper);
     border: 2px solid var(--border-soft);
-    border-radius: 24px;
-    padding: 36px 40px;
-    margin-bottom: 28px;
+    border-radius: 22px;
+    padding: 26px 32px;
+    margin-bottom: 24px;
     position: relative;
     overflow: hidden;
   }
@@ -2155,32 +2155,32 @@
     content: '';
     position: absolute;
     top: -40px; right: -40px;
-    width: 180px; height: 180px;
+    width: 160px; height: 160px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(244, 162, 97, 0.25), transparent 70%);
+    background: radial-gradient(circle, rgba(244, 162, 97, 0.22), transparent 70%);
     pointer-events: none;
   }
   .roadtrip-header {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
     position: relative;
   }
   .roadtrip-kicker {
     font-family: 'Caveat', cursive;
-    font-size: 24px;
+    font-size: 20px;
     color: var(--coral-deep);
     font-weight: 600;
     transform: rotate(-1deg);
     display: inline-block;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
   .roadtrip-title {
     font-family: 'Instrument Serif', serif;
-    font-size: 36px;
+    font-size: 26px;
     font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
     color: var(--ink);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     max-width: 720px;
   }
   .roadtrip-title em {
@@ -2190,22 +2190,22 @@
   .roadtrip-sub {
     font-family: 'Instrument Serif', serif;
     font-style: italic;
-    font-size: 17px;
+    font-size: 14px;
     color: var(--ink-soft);
-    line-height: 1.5;
+    line-height: 1.45;
     max-width: 640px;
   }
   .roadtrip-roles {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
     position: relative;
   }
   .roadtrip-role {
     background: var(--cream);
     border: 2px solid var(--border-soft);
-    border-radius: 16px;
-    padding: 18px 18px 14px;
+    border-radius: 14px;
+    padding: 12px 14px 10px;
     cursor: pointer;
     transition: all 0.2s;
     text-align: left;
@@ -2223,47 +2223,48 @@
     box-shadow: 0 6px 18px rgba(244, 162, 97, 0.18);
   }
   .roadtrip-role-icon {
-    font-size: 28px;
+    font-size: 22px;
     line-height: 1;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     display: block;
   }
   .roadtrip-role-name {
     font-family: 'Instrument Serif', serif;
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--ink);
     margin-bottom: 2px;
     letter-spacing: -0.01em;
+    line-height: 1.2;
   }
   .roadtrip-role-name em {
     font-style: italic;
     color: var(--coral-deep);
   }
   .roadtrip-role-desc {
-    font-size: 12px;
-    line-height: 1.4;
+    font-size: 11px;
+    line-height: 1.35;
     color: var(--ink-faint);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .roadtrip-role-tally {
-    min-height: 26px;
-    padding-top: 8px;
+    min-height: 22px;
+    padding-top: 6px;
     border-top: 1px dashed var(--border-soft);
     display: flex;
     flex-wrap: wrap;
-    gap: 4px 10px;
+    gap: 3px 8px;
     align-items: center;
   }
   .roadtrip-role-tally-empty {
     font-family: 'Caveat', cursive;
-    font-size: 15px;
+    font-size: 13px;
     color: var(--ink-faint);
     font-style: italic;
   }
   .roadtrip-name-chip {
     font-family: 'Caveat', cursive;
-    font-size: 17px;
+    font-size: 15px;
     color: var(--coral-deep);
     line-height: 1.1;
     font-weight: 600;
@@ -2284,17 +2285,17 @@
   }
   .roadtrip-custom-input-row {
     display: flex;
-    gap: 6px;
-    margin-bottom: 10px;
+    gap: 5px;
+    margin-bottom: 8px;
   }
   .roadtrip-custom-input-row input {
     flex: 1;
     background: var(--paper);
     border: 1.5px solid var(--border-soft);
-    border-radius: 10px;
-    padding: 8px 12px;
+    border-radius: 8px;
+    padding: 6px 10px;
     font-family: 'Instrument Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--ink);
     transition: border-color 0.2s;
     min-width: 0;
@@ -2305,10 +2306,10 @@
   }
   .roadtrip-custom-input-row button {
     font-family: 'Instrument Sans', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    padding: 8px 12px;
-    border-radius: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
     border: 1.5px solid var(--ink);
     background: var(--ink);
     color: var(--paper);
@@ -2321,7 +2322,7 @@
   }
   .roadtrip-custom-name-chip {
     font-family: 'Caveat', cursive;
-    font-size: 17px;
+    font-size: 15px;
     color: var(--coral-deep);
     line-height: 1.2;
     font-weight: 600;
@@ -2333,8 +2334,8 @@
   }
   .roadtrip-custom-name-chip .role-text::before { content: '— '; color: var(--ink-faint); }
   @media (max-width: 600px) {
-    .roadtrip-panel { padding: 28px 24px; }
-    .roadtrip-title { font-size: 28px; }
+    .roadtrip-panel { padding: 22px 18px; }
+    .roadtrip-title { font-size: 22px; }
     .roadtrip-roles { grid-template-columns: repeat(2, 1fr); }
   }
 
