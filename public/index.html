@@ -6691,64 +6691,198 @@ Give the single strongest, most honest objection to this concept from your persp
     let output = '# CX Transformation — A Day Together\n';
     output += `Exported ${new Date().toLocaleString()}\n\n`;
 
-    if (state.arrivals.length > 0) {
-      output += '## In the room\n' + state.arrivals.map(n => `- ${n}`).join('\n') + '\n\n';
+    // ----- Welcome / arrivals -----
+    if (state.arrivals && state.arrivals.length > 0) {
+      output += '## In the room\n';
+      state.arrivals.forEach(n => { output += `- ${n}\n`; });
+      output += '\n';
     }
 
-    if (state.pride.length > 0) {
-      output += '## Moments of pride\n';
+    // ----- Success Recap -----
+    let recapWritten = false;
+    const writeRecapHeader = () => {
+      if (!recapWritten) { output += '## Success Recap\n\n'; recapWritten = true; }
+    };
+
+    if (state.pride && state.pride.length > 0) {
+      writeRecapHeader();
+      output += '### Moments we\'re proud of\n';
       state.pride.forEach(p => { output += `- "${p.text}" — ${p.author}\n`; });
       output += '\n';
     }
 
-    if (state.missing.length > 0) {
-      output += '## Open floor / what we might be missing\n';
+    if (Array.isArray(state.retro) && state.retro.length > 0) {
+      writeRecapHeader();
+      output += '### One learning to carry forward\n';
+      state.retro.forEach(r => { output += `- "${r.text}" — ${r.author}\n`; });
+      output += '\n';
+    }
+
+    // Photos: just record how many slots are filled (the images themselves
+    // are too large for a markdown export, but worth knowing they exist).
+    const photoCount = Object.keys(state.photos || {}).filter(k => state.photos[k]).length;
+    if (photoCount > 0) {
+      writeRecapHeader();
+      output += `### Team photos\n${photoCount} photo${photoCount === 1 ? '' : 's'} added to the wall.\n\n`;
+    }
+
+    // ----- Break 1 — road trip roles + check-in words -----
+    let break1Written = false;
+    const writeBreak1Header = () => {
+      if (!break1Written) { output += '## Break — road trip roles & check-in\n\n'; break1Written = true; }
+    };
+
+    const roadtripRoleLabels = {
+      driver: 'The driver',
+      navigator: 'The navigator',
+      dj: 'The DJ',
+      snacks: 'Snack patrol',
+      vibes: 'The memory keeper',
+      planner: 'The planner'
+    };
+
+    if (state.roadtripRoles && Object.keys(state.roadtripRoles).length > 0) {
+      writeBreak1Header();
+      output += '### Road trip roles\n';
+      // Build a name list per role.
+      const roleBuckets = {};
+      Object.keys(roadtripRoleLabels).forEach(r => roleBuckets[r] = []);
+      const customs = []; // { name, text }
+      Object.keys(state.roadtripRoles).forEach(name => {
+        const v = state.roadtripRoles[name];
+        if (typeof v === 'string' && roleBuckets[v]) {
+          roleBuckets[v].push(name);
+        } else if (v && typeof v === 'object' && v.role === 'custom' && v.text) {
+          customs.push({ name, text: v.text });
+        }
+      });
+      Object.keys(roadtripRoleLabels).forEach(r => {
+        if (roleBuckets[r].length > 0) {
+          output += `- **${roadtripRoleLabels[r]}**: ${roleBuckets[r].join(', ')}\n`;
+        }
+      });
+      if (customs.length > 0) {
+        output += '- **Something else**:\n';
+        customs.forEach(c => { output += `  - ${c.name} — ${c.text}\n`; });
+      }
+      output += '\n';
+    }
+
+    if (Array.isArray(state.checkinWords) && state.checkinWords.length > 0) {
+      writeBreak1Header();
+      output += '### One word for how people are doing\n';
+      state.checkinWords.forEach(w => { output += `- "${w.text}" — ${w.author}\n`; });
+      output += '\n';
+    }
+
+    // ----- What's Next -----
+    let nextWritten = false;
+    const writeNextHeader = () => {
+      if (!nextWritten) { output += '## What\'s Next — CX Support Through 2026\n\n'; nextWritten = true; }
+    };
+
+    const scopeLabels = {
+      simon: 'Agile VMO Support',
+      alimac: 'Future Field Operating Model',
+      tiff: 'Targeted Experiment Support',
+      vmo: 'AI-Driven Experimentation Agent Pilot'
+    };
+    const stanceLabels = { in: "I'm in", discuss: "Let's discuss", build: 'Building on this' };
+
+    const scopeKeys = Object.keys(scopeLabels);
+    const hasScopeReactions = scopeKeys.some(k =>
+      ['in', 'discuss', 'build'].some(s => (state.reactions[k + '-' + s] || []).length > 0)
+    );
+    if (hasScopeReactions) {
+      writeNextHeader();
+      output += '### Reactions on the proposed scope\n';
+      scopeKeys.forEach(k => {
+        const lines = [];
+        ['in', 'discuss', 'build'].forEach(s => {
+          const arr = state.reactions[k + '-' + s] || [];
+          if (arr.length > 0) lines.push(`${stanceLabels[s]}: ${arr.length} (${arr.join(', ')})`);
+        });
+        if (lines.length > 0) output += `- **${scopeLabels[k]}** — ${lines.join(' · ')}\n`;
+      });
+      output += '\n';
+    }
+
+    if (Array.isArray(state.missing) && state.missing.length > 0) {
+      writeNextHeader();
+      output += '### What are we missing?\n';
       state.missing.forEach(m => { output += `- ${m.text} — ${m.author}\n`; });
       output += '\n';
     }
 
-    const hasReactions = Object.values(state.reactions).some(a => a.length > 0);
-    if (hasReactions) {
-      output += '## Reactions on SOW 2 scope\n';
-      ['simon', 'alimac', 'tiff', 'vmo'].forEach(ws => {
-        const line = [];
-        ['in', 'discuss', 'build'].forEach(t => {
-          const arr = state.reactions[ws + '-' + t] || [];
-          if (arr.length > 0) line.push(`${t}: ${arr.length} (${arr.join(', ')})`);
+    // ----- Big Picture Thinking -----
+    let bigpicWritten = false;
+    const writeBigpicHeader = () => {
+      if (!bigpicWritten) { output += '## Big Picture Thinking\n\n'; bigpicWritten = true; }
+    };
+
+    const betLabels = {
+      trust: 'Bet 1 — Trust before the prescription',
+      dtp: 'Bet 2 — Direct-to-patient infrastructure',
+      quality: 'Bet 3 — Quality over quantity of engagement'
+    };
+    const betKeys = Object.keys(betLabels);
+
+    const hasBetReactions = betKeys.some(k =>
+      ['in', 'discuss', 'build'].some(s => (state.reactions['bet-' + k + '-' + s] || []).length > 0)
+    );
+    const betStanceLabels = {
+      in: 'Worth a real bet',
+      discuss: 'Interesting, not for us',
+      build: 'Already on this'
+    };
+    if (hasBetReactions) {
+      writeBigpicHeader();
+      output += '### Stances on the three bets\n';
+      betKeys.forEach(k => {
+        const lines = [];
+        ['in', 'discuss', 'build'].forEach(s => {
+          const arr = state.reactions['bet-' + k + '-' + s] || [];
+          if (arr.length > 0) lines.push(`${betStanceLabels[s]}: ${arr.length} (${arr.join(', ')})`);
         });
-        if (line.length > 0) output += `- **${ws}**: ${line.join(' · ')}\n`;
+        if (lines.length > 0) output += `- **${betLabels[k]}** — ${lines.join(' · ')}\n`;
       });
       output += '\n';
     }
 
-    output += '## Friction Points\n\n';
-    ['customer', 'internal', 'vmo'].forEach(lens => {
-      if (state.friction[lens].length > 0) {
-        output += `### ${lens.charAt(0).toUpperCase() + lens.slice(1)}\n`;
-        state.friction[lens].forEach(f => { output += `- ${f.text} — ${f.author}\n`; });
-        output += '\n';
-      }
-    });
-
-    if (state.clusters.length > 0) {
-      output += '## Clusters & HMWs\n\n';
-      state.clusters.forEach((c, i) => {
-        output += `### ${i + 1}. ${c.name} [${c.lens}]\n`;
-        output += `${c.description}\n\n`;
-        output += `**HMW:** ${c.hmw}\n\n`;
+    const hasBetComments = state.bigPicComments && betKeys.some(k =>
+      Array.isArray(state.bigPicComments[k]) && state.bigPicComments[k].length > 0
+    );
+    if (hasBetComments) {
+      writeBigpicHeader();
+      output += '### One-liner reactions per bet\n';
+      betKeys.forEach(k => {
+        const items = (state.bigPicComments[k] || []);
+        if (items.length === 0) return;
+        output += `\n**${betLabels[k]}**\n`;
+        items.forEach(c => { output += `- "${c.text}" — ${c.author}\n`; });
       });
+      output += '\n';
     }
 
-    if (state.commitments.length > 0) {
-      output += '## Commitments (shortlist for SOW 2)\n\n';
-      state.commitments.forEach(c => { output += `- "${c.text}" — ${c.author}\n`; });
+    if (Array.isArray(state.bigPicTakeaway) && state.bigPicTakeaway.length > 0) {
+      writeBigpicHeader();
+      output += '### Questions we\'re leaving with (Q2 / Q3 to explore)\n';
+      state.bigPicTakeaway.forEach(t => { output += `- "${t.text}" — ${t.author}\n`; });
+      output += '\n';
+    }
+
+    // ----- Closing favorites -----
+    if (Array.isArray(state.favorites) && state.favorites.length > 0) {
+      output += '## Favorite moments from the day\n';
+      state.favorites.forEach(f => { output += `- "${f.text}" — ${f.author}\n`; });
+      output += '\n';
     }
 
     const blob = new Blob([output], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'workshop-output-' + new Date().toISOString().split('T')[0] + '.md';
+    a.download = 'cx-workshop-' + new Date().toISOString().split('T')[0] + '.md';
     a.click();
     URL.revokeObjectURL(url);
 
