@@ -2139,6 +2139,205 @@
     background: white;
   }
 
+  /* ============ ROADTRIP ICEBREAKER (break 1 only) ============ */
+  /* A playful "what's your road trip role?" chip selector with a live */
+  /* tally underneath each role showing who picked what. */
+  .roadtrip-panel {
+    background: var(--paper);
+    border: 2px solid var(--border-soft);
+    border-radius: 24px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .roadtrip-panel::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244, 162, 97, 0.25), transparent 70%);
+    pointer-events: none;
+  }
+  .roadtrip-header {
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .roadtrip-kicker {
+    font-family: 'Caveat', cursive;
+    font-size: 24px;
+    color: var(--coral-deep);
+    font-weight: 600;
+    transform: rotate(-1deg);
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .roadtrip-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 8px;
+    max-width: 720px;
+  }
+  .roadtrip-title em {
+    font-style: italic;
+    color: var(--coral-deep);
+  }
+  .roadtrip-sub {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 640px;
+  }
+  .roadtrip-roles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    position: relative;
+  }
+  .roadtrip-role {
+    background: var(--cream);
+    border: 2px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 18px 18px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+  }
+  .roadtrip-role:hover {
+    border-color: var(--coral);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(45, 24, 16, 0.06);
+  }
+  .roadtrip-role.is-mine {
+    background: var(--cream-warm);
+    border-color: var(--coral-deep);
+    box-shadow: 0 6px 18px rgba(244, 162, 97, 0.18);
+  }
+  .roadtrip-role-icon {
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .roadtrip-role-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 2px;
+    letter-spacing: -0.01em;
+  }
+  .roadtrip-role-name em {
+    font-style: italic;
+    color: var(--coral-deep);
+  }
+  .roadtrip-role-desc {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .roadtrip-role-tally {
+    min-height: 26px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    align-items: center;
+  }
+  .roadtrip-role-tally-empty {
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+  .roadtrip-name-chip {
+    font-family: 'Caveat', cursive;
+    font-size: 17px;
+    color: var(--coral-deep);
+    line-height: 1.1;
+    font-weight: 600;
+    animation: wordAppear 0.4s ease-out;
+  }
+
+  /* Custom role — dashed border, mini input that toggles open */
+  .roadtrip-role-custom {
+    background: transparent;
+    border-style: dashed;
+  }
+  .roadtrip-role-custom .roadtrip-role-name {
+    color: var(--ink-soft);
+  }
+  .roadtrip-role-custom.is-mine {
+    background: var(--cream-warm);
+    border-style: solid;
+  }
+  .roadtrip-custom-input-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .roadtrip-custom-input-row input {
+    flex: 1;
+    background: var(--paper);
+    border: 1.5px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    transition: border-color 0.2s;
+    min-width: 0;
+  }
+  .roadtrip-custom-input-row input:focus {
+    outline: none;
+    border-color: var(--coral);
+  }
+  .roadtrip-custom-input-row button {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .roadtrip-custom-input-row button:hover {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .roadtrip-custom-name-chip {
+    font-family: 'Caveat', cursive;
+    font-size: 17px;
+    color: var(--coral-deep);
+    line-height: 1.2;
+    font-weight: 600;
+    animation: wordAppear 0.4s ease-out;
+  }
+  .roadtrip-custom-name-chip .role-text {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .roadtrip-custom-name-chip .role-text::before { content: '— '; color: var(--ink-faint); }
+  @media (max-width: 600px) {
+    .roadtrip-panel { padding: 28px 24px; }
+    .roadtrip-title { font-size: 28px; }
+    .roadtrip-roles { grid-template-columns: repeat(2, 1fr); }
+  }
+
   /* Open "what else are we missing" card */
   .scope-card-open {
     background: linear-gradient(160deg, var(--paper) 0%, var(--cream-warm) 100%);
@@ -4190,10 +4389,6 @@
               <li>Prioritization framework developed and ready to be applied to current &amp; upcoming experiments.</li>
             </ul>
           </div>
-          <div class="card-detail-section">
-            <h4>What's next</h4>
-            <p>We think there's a great opportunity to reintroduce customer experience &amp; experimentation to R&amp;D at Jazz.</p>
-          </div>
         </div>
       </div>
 
@@ -4269,11 +4464,11 @@
       <!-- EDIT-RECAP-CARD-5 -->
       <div class="deliverable-card" id="card-5" tabindex="0" role="button" aria-expanded="false" onclick="toggleCardDetail('card-5', event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCardDetail('card-5', event)}">
         <div class="deliverable-tag">Ongoing Support</div>
-        <h3 class="deliverable-hero"><em>Hands On</em> support</h3>
-        <p class="deliverable-desc">[placeholder — fill in description]</p>
+        <h3 class="deliverable-hero"><em>Support</em> as you needed</h3>
+        <p class="deliverable-desc">In the spirit of agile, we remained flexible to support you in the way that you best needed — from communications to presentations.</p>
         <div class="deliverable-handover">
           <span class="handover-label">handover →</span>
-          Owned going forward by <span class="handover-owner">[Owner Name / Team]</span>. [Brief note on handover status.]
+          No handover yet — we'd love to continue supporting you as you need in 2026.
         </div>
         <div class="deliverable-meta"></div>
         <!-- EDIT-RECAP-CARD-5-DETAIL -->
@@ -4281,14 +4476,10 @@
           <div class="card-detail-section">
             <h4>Highlights</h4>
             <ul>
-              <li>[Highlight 1]</li>
-              <li>[Highlight 2]</li>
-              <li>[Highlight 3]</li>
+              <li>Developed communication for CX Kick Off follow up and the new Sleep Activator role.</li>
+              <li>Support and content development for GCLT, EC, and Big Room Planning.</li>
+              <li>Provided support for Connection Day.</li>
             </ul>
-          </div>
-          <div class="card-detail-section">
-            <h4>Notes</h4>
-            <p>[Optional notes — context, lessons learned, or what to watch next.]</p>
           </div>
         </div>
       </div>
@@ -4473,6 +4664,77 @@
     </div>
 
     <!-- One-word check-in -->
+    <!-- EDIT-BREAK1-ROADTRIP : icebreaker for the first break only -->
+    <div class="roadtrip-panel">
+      <div class="roadtrip-header">
+        <div class="roadtrip-kicker">while you're up →</div>
+        <h3 class="roadtrip-title">We're about to embark on another <em>journey</em> together — what's your go-to <em>road trip</em> role?</h3>
+        <p class="roadtrip-sub">Tap your role. See who's covering what. We'll need all of these to make it.</p>
+      </div>
+      <div class="roadtrip-roles" id="roadtripRoles">
+        <button type="button" class="roadtrip-role" data-role="driver" onclick="pickRoadtripRole('driver')">
+          <span class="roadtrip-role-icon">🚗</span>
+          <div class="roadtrip-role-name">The <em>driver</em></div>
+          <div class="roadtrip-role-desc">Hands on the wheel, eyes on the road.</div>
+          <div class="roadtrip-role-tally" id="roadtripTally-driver">
+            <span class="roadtrip-role-tally-empty">no one yet…</span>
+          </div>
+        </button>
+        <button type="button" class="roadtrip-role" data-role="navigator" onclick="pickRoadtripRole('navigator')">
+          <span class="roadtrip-role-icon">🗺️</span>
+          <div class="roadtrip-role-name">The <em>navigator</em></div>
+          <div class="roadtrip-role-desc">Owns the directions, calls the turns.</div>
+          <div class="roadtrip-role-tally" id="roadtripTally-navigator">
+            <span class="roadtrip-role-tally-empty">no one yet…</span>
+          </div>
+        </button>
+        <button type="button" class="roadtrip-role" data-role="dj" onclick="pickRoadtripRole('dj')">
+          <span class="roadtrip-role-icon">🎧</span>
+          <div class="roadtrip-role-name">The <em>DJ</em></div>
+          <div class="roadtrip-role-desc">Music owner, vibes curator.</div>
+          <div class="roadtrip-role-tally" id="roadtripTally-dj">
+            <span class="roadtrip-role-tally-empty">no one yet…</span>
+          </div>
+        </button>
+        <button type="button" class="roadtrip-role" data-role="snacks" onclick="pickRoadtripRole('snacks')">
+          <span class="roadtrip-role-icon">🍿</span>
+          <div class="roadtrip-role-name">Snack <em>patrol</em></div>
+          <div class="roadtrip-role-desc">Coffee, gum, gummy bears, anything.</div>
+          <div class="roadtrip-role-tally" id="roadtripTally-snacks">
+            <span class="roadtrip-role-tally-empty">no one yet…</span>
+          </div>
+        </button>
+        <button type="button" class="roadtrip-role" data-role="vibes" onclick="pickRoadtripRole('vibes')">
+          <span class="roadtrip-role-icon">📸</span>
+          <div class="roadtrip-role-name">The <em>memory keeper</em></div>
+          <div class="roadtrip-role-desc">Photos, stories, the group chat.</div>
+          <div class="roadtrip-role-tally" id="roadtripTally-vibes">
+            <span class="roadtrip-role-tally-empty">no one yet…</span>
+          </div>
+        </button>
+        <button type="button" class="roadtrip-role" data-role="planner" onclick="pickRoadtripRole('planner')">
+          <span class="roadtrip-role-icon">📋</span>
+          <div class="roadtrip-role-name">The <em>planner</em></div>
+          <div class="roadtrip-role-desc">Itinerary, stops, where we sleep.</div>
+          <div class="roadtrip-role-tally" id="roadtripTally-planner">
+            <span class="roadtrip-role-tally-empty">no one yet…</span>
+          </div>
+        </button>
+        <div class="roadtrip-role roadtrip-role-custom" data-role="custom" id="roadtripCustomTile">
+          <span class="roadtrip-role-icon">✨</span>
+          <div class="roadtrip-role-name">Something <em>else?</em></div>
+          <div class="roadtrip-role-desc">Make up your own. Snack chef, podcast curator, sing-along lead.</div>
+          <div class="roadtrip-custom-input-row">
+            <input type="text" id="roadtripCustomInput" maxlength="40" placeholder="my role is…" onkeydown="if(event.key==='Enter') saveCustomRoadtripRole()" />
+            <button type="button" onclick="saveCustomRoadtripRole()">Set</button>
+          </div>
+          <div class="roadtrip-role-tally" id="roadtripTally-custom">
+            <span class="roadtrip-role-tally-empty">no one yet…</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- EDIT-BREAK1-CHECKIN -->
     <div class="checkin-panel">
       <div class="checkin-header">
@@ -4517,15 +4779,14 @@
       <div class="scope-card" data-workstream="simon">
         <div class="scope-header">
           <div class="scope-meta">
-            <div class="scope-owner">VMO-wide</div>
-            <div class="scope-workstream">Workstream · Flexible Support</div>
+            <div class="scope-owner">Supporting: VMO</div>
           </div>
         </div>
-        <h3 class="scope-title"><em>On-demand</em> VMO Support</h3>
-        <p class="scope-body">Provide flexible, on-demand capacity to the VMO to advance priority CX Transformation initiatives. Includes support for KPI/success-measure alignment, exec narratives, CX engagement moments (e.g., roadshows/hackathons/connection days), and bringing the customer voice into brand planning inputs.</p>
+        <h3 class="scope-title"><em>Agile</em> VMO Support</h3>
+        <p class="scope-body">We'll provide your team with flexible, on-demand capacity to advance priority CX Transformation initiatives. This includes support for KPI and success-measure alignment, executive-ready leadership materials, CX engagement moments (including roadshows and hackathons), and bringing the customer voice into brand planning inputs.</p>
         <div class="scope-whats-new">
           <span class="scope-whats-new-label">What's new</span>
-          <span>New/expanded "capacity buffer": less pre-scoped deliverables, more responsive support that can flex with shifting priorities.</span>
+          <span>New/expanded "capacity buffer" that allows us to provide more responsive support that can flex with shifting priorities.</span>
         </div>
         <div class="reactions-bar">
           <button class="reaction-btn" onclick="addReaction('simon', 'in')">👍 <span>I'm in</span> <span class="reaction-count" data-key="simon-in">0</span></button>
@@ -4538,15 +4799,14 @@
       <div class="scope-card" data-workstream="alimac">
         <div class="scope-header">
           <div class="scope-meta">
-            <div class="scope-owner">Tiffany</div>
-            <div class="scope-workstream">Workstream · Field Operating Model</div>
+            <div class="scope-owner">Supporting: Tiffany Jauhari-Crisan</div>
           </div>
         </div>
-        <h3 class="scope-title">Future Field Operating Model, <em>Phases 1A—3</em></h3>
-        <p class="scope-body">Enable the definition of a future-facing US Field Operating Model through structured phases: Phase 1A current-state inventory; Phase 1B "from–to" role synthesis + role clarity framework; Phase 2 integrated workflow &amp; customer experience view; Phase 3 leadership decision &amp; implications pack. Built via templates, facilitation, structured comparisons, and synthesis.</p>
+        <h3 class="scope-title">Future <em>Field Operating Model</em></h3>
+        <p class="scope-body">We will enable Tiffany with the development of a future-facing US Field Operating Model through its structured, pre-defined phases. Our support will focus on coordinating across key stakeholders, facilitating structured decision-making, and synthesizing insights and trade-offs to support the development of an aligned, actionable future-state operating model.</p>
         <div class="scope-whats-new">
           <span class="scope-whats-new-label">What's new</span>
-          <span>More structured, phased approach with explicit leadership decision points; emphasis on integration/workflows.</span>
+          <span>A phased approach for a future-state operating model that builds on the initial recommendations from the Workstream Leads.</span>
         </div>
         <div class="reactions-bar">
           <button class="reaction-btn" onclick="addReaction('alimac', 'in')">👍 <span>I'm in</span> <span class="reaction-count" data-key="alimac-in">0</span></button>
@@ -4559,15 +4819,14 @@
       <div class="scope-card" data-workstream="tiff">
         <div class="scope-header">
           <div class="scope-meta">
-            <div class="scope-owner">Workstream Leads</div>
-            <div class="scope-workstream">Workstream · Experiment Support</div>
+            <div class="scope-owner">Supporting: VMO &amp; Workstream Leads</div>
           </div>
         </div>
-        <h3 class="scope-title">Targeted <em>Enablement</em> of Experiments</h3>
-        <p class="scope-body">Hands-on support to designated workstream leads as needed to maintain momentum and quality across experiments.</p>
+        <h3 class="scope-title">Targeted <em>Experiment Support</em></h3>
+        <p class="scope-body">Hands-on support to the VMO with experiment acceleration and prioritization, and designated support to workstream leads as needed to maintain momentum and quality across experiments.</p>
         <div class="scope-whats-new">
           <span class="scope-whats-new-label">What's new</span>
-          <span>Enabling leads with structure, cadence, and leadership-ready synthesis for their experiments.</span>
+          <span>Experiment prioritization, continuing to enable leads with structure, cadence, and leadership-ready synthesis for their experiments.</span>
         </div>
         <div class="reactions-bar">
           <button class="reaction-btn" onclick="addReaction('tiff', 'in')">👍 <span>I'm in</span> <span class="reaction-count" data-key="tiff-in">0</span></button>
@@ -4580,15 +4839,14 @@
       <div class="scope-card" data-workstream="vmo">
         <div class="scope-header">
           <div class="scope-meta">
-            <div class="scope-owner">VMO-wide</div>
-            <div class="scope-workstream">Workstream · AI-Driven Experimentation</div>
+            <div class="scope-owner">Supporting: VMO</div>
           </div>
         </div>
-        <h3 class="scope-title"><em>AI-Driven</em> Experimentation Support Agent</h3>
-        <p class="scope-body">Define, design, and initially enable an AI-driven experimentation support agent. Focus is on usability and alignment to CX governance/success measures.</p>
+        <h3 class="scope-title"><em>AI-Driven Experimentation</em> Agent Pilot</h3>
+        <p class="scope-body">A short, focused experiment to assess the value and feasibility of an AI-driven experimentation agent for Jazz. Our work will focus on a product design thinking session to identify agent use cases, requirements, and success criteria.</p>
         <div class="scope-whats-new">
           <span class="scope-whats-new-label">What's new</span>
-          <span>Moves from manual tracking/synthesis toward an AI-enabled operating assist.</span>
+          <span>No pressure to continue to a full build — let's co-create a prototype together to ensure we're solving an unmet need of our team.</span>
         </div>
         <div class="reactions-bar">
           <button class="reaction-btn" onclick="addReaction('vmo', 'in')">👍 <span>I'm in</span> <span class="reaction-count" data-key="vmo-in">0</span></button>
@@ -5133,7 +5391,8 @@
     commitments: [],
     favorites: [],
     bigPicComments: { trust: [], dtp: [], quality: [] },
-    bigPicTakeaway: []
+    bigPicTakeaway: [],
+    roadtripRoles: {} // { userName: 'driver' | 'navigator' | ... }
   };
 
   let userName = localStorage.getItem('workshop-user-name') || '';
@@ -5360,6 +5619,14 @@
       }
     } catch (e) { /* empty */ }
 
+    try {
+      const res = await window.storage.get('roadtrip-roles-v1', true);
+      if (res && res.value) {
+        const loaded = JSON.parse(res.value);
+        if (loaded && typeof loaded === 'object') state.roadtripRoles = loaded;
+      }
+    } catch (e) { /* empty */ }
+
     renderArrivals();
     renderPride();
     renderRetro();
@@ -5373,6 +5640,7 @@
     renderFavorites();
     renderBigPicComments();
     renderBigPicTakeaway();
+    renderRoadtripRoles();
     renderDayStats();
   }
 
@@ -5412,6 +5680,7 @@
     state.favorites = [];
     state.bigPicComments = { trust: [], dtp: [], quality: [] };
     state.bigPicTakeaway = [];
+    state.roadtripRoles = {};
     try {
       await window.storage.delete('arrivals-list-v1', true);
       await window.storage.delete('pride-wall-v1', true);
@@ -5425,6 +5694,7 @@
       await window.storage.delete('favorites-v1', true);
       await window.storage.delete('bigpic-comments-v1', true);
       await window.storage.delete('bigpic-takeaway-v1', true);
+      await window.storage.delete('roadtrip-roles-v1', true);
       for (let i = 1; i <= 6; i++) {
         await window.storage.delete('team-photo-' + i, true);
       }
@@ -5491,6 +5761,12 @@
   async function saveBigPicTakeaway() {
     try {
       await window.storage.set('bigpic-takeaway-v1', JSON.stringify(state.bigPicTakeaway), true);
+    } catch (e) { console.error(e); }
+  }
+
+  async function saveRoadtripRoles() {
+    try {
+      await window.storage.set('roadtrip-roles-v1', JSON.stringify(state.roadtripRoles), true);
     } catch (e) { console.error(e); }
   }
 
@@ -5928,6 +6204,106 @@
         </div>
       `).join('');
     }
+  }
+
+  // ======== ROADTRIP ICEBREAKER (break 1) ========
+  // One role per person. Clicking the same role un-picks it; clicking a
+  // different role moves you. Stored as { userName: 'driver' } for built-in
+  // roles, or { userName: { role: 'custom', text: 'Snack chef' } } for
+  // custom roles. So people can switch and we always show the current state.
+  const ROADTRIP_ROLES = ['driver', 'navigator', 'dj', 'snacks', 'vibes', 'planner'];
+
+  // Returns { role, text? } regardless of whether the stored value is a
+  // string (built-in) or object (custom). Returns null if nothing picked.
+  function getUserRoadtripPick(name) {
+    if (!name || !state.roadtripRoles) return null;
+    const v = state.roadtripRoles[name];
+    if (!v) return null;
+    if (typeof v === 'string') return { role: v };
+    if (typeof v === 'object' && v.role) return v;
+    return null;
+  }
+
+  async function pickRoadtripRole(role) {
+    if (!ROADTRIP_ROLES.includes(role)) return;
+    if (!userName) { alert('Please enter your name first.'); return; }
+
+    if (!state.roadtripRoles) state.roadtripRoles = {};
+    const current = getUserRoadtripPick(userName);
+    if (current && current.role === role) {
+      // Tapping your current role removes it.
+      delete state.roadtripRoles[userName];
+    } else {
+      state.roadtripRoles[userName] = role;
+    }
+    await saveRoadtripRoles();
+    renderRoadtripRoles();
+  }
+
+  async function saveCustomRoadtripRole() {
+    const input = document.getElementById('roadtripCustomInput');
+    if (!input) return;
+    const text = input.value.trim();
+    if (!text) return;
+    if (!userName) { alert('Please enter your name first.'); return; }
+
+    if (!state.roadtripRoles) state.roadtripRoles = {};
+    state.roadtripRoles[userName] = { role: 'custom', text };
+    input.value = '';
+    await saveRoadtripRoles();
+    renderRoadtripRoles();
+  }
+
+  function renderRoadtripRoles() {
+    const roles = state.roadtripRoles || {};
+    // Build name buckets per role.
+    const buckets = {};
+    ROADTRIP_ROLES.forEach(r => buckets[r] = []);
+    buckets.custom = []; // entries: { name, text }
+    Object.keys(roles).forEach(name => {
+      const v = roles[name];
+      if (typeof v === 'string' && buckets[v]) {
+        buckets[v].push(name);
+      } else if (v && typeof v === 'object' && v.role === 'custom' && v.text) {
+        buckets.custom.push({ name, text: v.text });
+      }
+    });
+
+    // Render built-in role tallies.
+    ROADTRIP_ROLES.forEach(r => {
+      const tally = document.getElementById('roadtripTally-' + r);
+      if (!tally) return;
+      const names = buckets[r];
+      if (names.length === 0) {
+        tally.innerHTML = '<span class="roadtrip-role-tally-empty">no one yet…</span>';
+      } else {
+        tally.innerHTML = names.map(n =>
+          `<span class="roadtrip-name-chip">${escapeHtml(n)}</span>`
+        ).join('');
+      }
+    });
+
+    // Render the custom tile tally.
+    const customTally = document.getElementById('roadtripTally-custom');
+    if (customTally) {
+      const customs = buckets.custom;
+      if (customs.length === 0) {
+        customTally.innerHTML = '<span class="roadtrip-role-tally-empty">no one yet…</span>';
+      } else {
+        customTally.innerHTML = customs.map(c => `
+          <span class="roadtrip-custom-name-chip">
+            ${escapeHtml(c.name)}<span class="role-text">${escapeHtml(c.text)}</span>
+          </span>
+        `).join('');
+      }
+    }
+
+    // Mark the current user's pick as 'is-mine' for visual selection state.
+    const myPick = getUserRoadtripPick(userName);
+    document.querySelectorAll('.roadtrip-role').forEach(btn => {
+      const btnRole = btn.dataset.role;
+      btn.classList.toggle('is-mine', !!myPick && myPick.role === btnRole);
+    });
   }
 
   function escapeHtml(str) {
